@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.welcome');
 });
+
+Route::middleware('auth:users')->group(function(){
+    Route::get('/',[ItemController::class,'index'])->name('user.items.index');
+});
+// ユーザーでログインすれば起こる
+
+Route::resource('items',ItemController::class)
+->middleware('auth:users');
+
+Route::get('/dashboard', function () {
+    return view('user.dashboard');
+})->middleware(['auth:users'])->name('dashboard');
+
+require __DIR__.'/auth.php';
