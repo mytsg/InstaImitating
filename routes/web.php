@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ItemController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,11 @@ Route::middleware('auth:users')->group(function(){
 
 Route::resource('items',ItemController::class)
 ->middleware('auth:users');
+
+Route::get('profile/{id}',[UserController::class,'profile'])->name('profile');
+
+Route::get('/like/{id}',[LikeController::class,'like'])->name('like');
+Route::get('/unlike/{id}',[LikeController::class,'unlike'])->name('unlike');
 
 Route::get('/dashboard', function () {
     return view('user.dashboard');
