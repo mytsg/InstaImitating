@@ -83,7 +83,7 @@ class ItemController extends Controller
             array_push($users, $like->user);
         }
 
-        dd($users);
+        // dd($users);
 
         return view('user.items.show',compact('users'));
     }
