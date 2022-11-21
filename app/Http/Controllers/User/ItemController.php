@@ -119,6 +119,9 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Item::findOrFail($id)
+        ->delete();
+        
+        return redirect()->route('user.items.index');
     }
 }

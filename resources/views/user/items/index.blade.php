@@ -32,6 +32,17 @@
                                             @endif
                                             </div>
                                             <a href="{{ route('user.items.show',['item' => $item->id]) }}">いいねしたユーザー</a>
+
+                                            @if($item->user_id == Auth::id())
+                                            <form id="delete_{{$item->id}}" method="post" action="{{ route('user.items.destroy',['item' => $item->id]) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <div class="md:px-4 py-3">
+                                                <div class="p-2 w-full mt-4 flex justify-around">
+                                                    <a href="#" data-id="{{ $item->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除する</a>
+                                                </div>
+                                            </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -44,4 +55,12 @@
             </div>
         </div>
     </div>
+<script>
+    function deletePost(e) {
+        'use strict';
+        if (confirm('本当に削除してもいいですか?')) {
+        document.getElementById('delete_' + e.dataset.id).submit();
+        }
+    }
+</script>
 </x-app-layout>
